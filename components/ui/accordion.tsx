@@ -80,15 +80,16 @@ export function AccordionTrigger({
 	const itemCtx = React.useContext(AccordionItemContext);
 	if (!ctx) throw new Error('AccordionTrigger must be used within Accordion');
 	if (!itemCtx) throw new Error('AccordionTrigger must be used within AccordionItem');
+	const { type, collapsible, openItems, setOpenItems } = ctx;
 
 	const itemValue = itemCtx.value;
-	const isOpen = ctx.openItems.includes(itemValue);
+	const isOpen = openItems.includes(itemValue);
 
 	function toggle() {
-		ctx.setOpenItems((prev) => {
-			if (ctx.type === 'single') {
+		setOpenItems((prev) => {
+			if (type === 'single') {
 				if (isOpen) {
-					return ctx.collapsible ? [] : prev;
+					return collapsible ? [] : prev;
 				}
 				return [itemValue];
 			}
@@ -146,8 +147,9 @@ export function AccordionContent({
 	if (!ctx) throw new Error('AccordionContent must be used within Accordion');
 	if (!itemCtx) throw new Error('AccordionContent must be used within AccordionItem');
 
+	const { openItems } = ctx;
 	const itemValue = itemCtx.value;
-	const isOpen = ctx.openItems.includes(itemValue);
+	const isOpen = openItems.includes(itemValue);
 	const contentId = `accordion-content-${itemValue}`;
 
 	return (
