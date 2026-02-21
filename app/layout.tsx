@@ -6,8 +6,8 @@ import { Footer } from '../components/footer';
 import { MobileCTA } from '../components/mobile-cta';
 
 export const metadata: Metadata = {
-	title: { default: 'River City Moving Co.', template: '%s | River City Moving Co.' },
-	description: 'Jacksonville movers — licensed, insured, transparent pricing.',
+	title: { default: 'Jacksonville Movers', template: '%s | Jacksonville Movers' },
+	description: 'Jacksonville movers — local, licensed & insured, transparent pricing.',
 	metadataBase: new URL('https://jaxflmovers.com'),
 };
 

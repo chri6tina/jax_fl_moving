@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
 import { Phone } from 'lucide-react';
+import Link from 'next/link';
 
 function scrollToId(id: string) {
 	if (typeof window === 'undefined') return;
@@ -11,11 +12,11 @@ function scrollToId(id: string) {
 }
 
 const NAV = [
-	{ label: 'Services', id: 'services' },
-	{ label: 'Pricing', id: 'pricing' },
-	{ label: 'Reviews', id: 'reviews' },
-	{ label: 'FAQ', id: 'faq' },
-	{ label: 'Contact', id: 'contact' },
+	{ label: 'Services', href: '/services' as const },
+	{ label: 'Pricing', href: '/pricing' as const },
+	{ label: 'Reviews', id: 'reviews' as const },
+	{ label: 'FAQ', id: 'faq' as const },
+	{ label: 'Contact', id: 'contact' as const },
 ];
 
 export function Header() {
@@ -44,20 +45,34 @@ export function Header() {
 							/>
 						</svg>
 					</button>
-					<div className="text-lg font-semibold tracking-tight text-slate-900">
+					<Link
+						href="/"
+						aria-label="Go to homepage"
+						className="text-lg font-semibold tracking-tight text-slate-900 hover:opacity-90"
+					>
 						Jacksonville Movers
-					</div>
+					</Link>
 				</div>
 				<nav className="hidden items-center gap-8 lg:flex">
-					{NAV.map((item) => (
-						<button
-							key={item.id}
-							onClick={() => scrollToId(item.id)}
-							className="text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
-						>
-							{item.label}
-						</button>
-					))}
+					{NAV.map((item) =>
+						item.href ? (
+							<Link
+								key={item.label}
+								href={item.href}
+								className="text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+							>
+								{item.label}
+							</Link>
+						) : (
+							<button
+								key={item.id}
+								onClick={() => scrollToId(item.id!)}
+								className="text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
+							>
+								{item.label}
+							</button>
+						)
+					)}
 				</nav>
 				<div className="hidden lg:block">
 					<Button onClick={() => scrollToId('quote')} className="bg-teal-600 hover:bg-teal-700">
@@ -81,18 +96,29 @@ export function Header() {
 			>
 				<div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
 					<nav className="grid gap-4">
-						{NAV.map((item) => (
-							<button
-								key={item.id}
-								onClick={() => {
-									scrollToId(item.id);
-									setOpen(false);
-								}}
-								className="w-full rounded-lg px-2 py-2 text-left text-base font-medium text-slate-800 hover:bg-slate-50"
-							>
-								{item.label}
-							</button>
-						))}
+						{NAV.map((item) =>
+							item.href ? (
+								<Link
+									key={item.label}
+									href={item.href}
+									onClick={() => setOpen(false)}
+									className="w-full rounded-lg px-2 py-2 text-left text-base font-medium text-slate-800 hover:bg-slate-50"
+								>
+									{item.label}
+								</Link>
+							) : (
+								<button
+									key={item.id}
+									onClick={() => {
+										scrollToId(item.id!);
+										setOpen(false);
+									}}
+									className="w-full rounded-lg px-2 py-2 text-left text-base font-medium text-slate-800 hover:bg-slate-50"
+								>
+									{item.label}
+								</button>
+							)
+						)}
 						<Button
 							className="mt-2 w-full bg-teal-600 hover:bg-teal-700"
 							onClick={() => {

@@ -45,6 +45,15 @@ const SERVICES = [
 	},
 ] as const;
 
+const slugs: Record<string, string> = {
+	'Local Moves': '/services/local-moves',
+	'Long Distance': '/services/long-distance',
+	Packing: '/services/packing',
+	'Loading / Unloading': '/services/loading-unloading',
+	'Office Moves': '/services/office-moves',
+	'Specialty Items': '/services/specialty-items',
+};
+
 export function Services() {
 	return (
 		<Section id="services">
@@ -57,40 +66,40 @@ export function Services() {
 				</p>
 			</div>
 			<div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-				{SERVICES.map(({ title, icon: Icon, desc }) => (
-					<Card key={title} className="transition-shadow hover:shadow-md">
-						<CardHeader>
-							<div className="flex items-center gap-3">
-								<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-700 ring-1 ring-inset ring-teal-200">
-									<Icon className="h-5 w-5" />
+				{SERVICES.map(({ title, icon: Icon, desc }) => {
+					const href = slugs[title];
+					const cardInner = (
+						<Card className="transition-shadow group-hover:shadow-md">
+							<CardHeader>
+								<div className="flex items-center gap-3">
+									<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-700 ring-1 ring-inset ring-teal-200">
+										<Icon className="h-5 w-5" />
+									</div>
+									<CardTitle>{title}</CardTitle>
 								</div>
-								<CardTitle>{title}</CardTitle>
-							</div>
-						</CardHeader>
-						<CardContent className="pt-0">
-							<p className="text-sm text-slate-700">{desc}</p>
-							{title === 'Local Moves' ? (
-								<Link
-									href="/services/local-moves"
-									className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-teal-700 hover:underline"
-									aria-label="Learn more about Local Moves"
-								>
+							</CardHeader>
+							<CardContent className="pt-0">
+								<p className="text-sm text-slate-700">{desc}</p>
+								<div className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-teal-700">
 									Learn more
-									<ChevronRight className="h-4 w-4" />
-								</Link>
-							) : (
-								<button
-									type="button"
-									className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-teal-700 hover:underline"
-									aria-label={`Learn more about ${title}`}
-								>
-									Learn more
-									<ChevronRight className="h-4 w-4" />
-								</button>
-							)}
-						</CardContent>
-					</Card>
-				))}
+									<ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+								</div>
+							</CardContent>
+						</Card>
+					);
+					return href ? (
+						<Link
+							key={title}
+							href={href}
+							className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 rounded-2xl"
+							aria-label={`Learn more about ${title}`}
+						>
+							{cardInner}
+						</Link>
+					) : (
+						<div key={title}>{cardInner}</div>
+					);
+				})}
 			</div>
 		</Section>
 	);

@@ -9,7 +9,7 @@ export function Footer() {
 					<div>
 						<h4 className="text-sm font-semibold text-slate-900">Company</h4>
 						<ul className="mt-3 space-y-2 text-sm text-slate-700">
-							<li>River City Moving Co.</li>
+							<li>Jacksonville Movers</li>
 							<li>Jacksonville, FL</li>
 							<li>Mon–Sat: 8am–6pm</li>
 						</ul>
@@ -42,7 +42,7 @@ export function Footer() {
 					</div>
 				</div>
 				<p className="mt-10 text-xs text-slate-500">
-					© {year} River City Moving Co. All rights reserved.
+					© {year} Jacksonville Movers. All rights reserved.
 				</p>
 			</div>
 		</footer>

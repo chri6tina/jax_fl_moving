@@ -8,15 +8,16 @@ import { PricingHowItWorks } from '../components/pricing-how-it-works';
 import { FAQ } from '../components/faq';
 import { ServiceArea } from '../components/service-area';
 import { FinalCTA } from '../components/final-cta';
+import { ScrollTicker } from '../components/scroll-ticker';
 
 export const metadata: Metadata = {
-	title: 'River City Moving Co. | Jacksonville Movers | Stress-free Moving',
+	title: 'Jacksonville Movers | Stress-free Moving in Jacksonville, FL',
 	description:
-		'Licensed & insured Jacksonville moving company offering local moves, packing, loading/unloading, office moves, and more. Transparent pricing, on-time crews, great communication.',
+		'Licensed & insured Jacksonville moving company for local moves, packing, loading/unloading, and office moves. Transparent pricing, on-time crews, great communication.',
 	openGraph: {
-		title: 'River City Moving Co. | Jacksonville Movers',
+		title: 'Jacksonville Movers | Stress-free Moving',
 		description:
-			'Licensed & insured Jacksonville moving company with transparent pricing.',
+			'Licensed & insured Jacksonville moving company with transparent pricing and friendly local crews.',
 		type: 'website',
 		locale: 'en_US',
 	},
@@ -27,6 +28,19 @@ export default function Page() {
 		<div className="min-h-screen bg-white text-slate-900">
 			<main id="main-content">
 				<Hero />
+				<ScrollTicker
+					items={[
+						'Residential moving',
+						'Commercial moving',
+						'Junk removal',
+						'College moving',
+						'Packing service',
+						'Loading & unloading',
+						'Apartment moves',
+						'Same-day available',
+					]}
+					speedSeconds={26}
+				/>
 				<Services />
 				<WhyChooseUs />
 				<Reviews />
