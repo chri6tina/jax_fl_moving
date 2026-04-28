@@ -10,8 +10,16 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600; // Revalidate every hour
 
+interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  url: string;
+  pathname: string;
+}
+
 export default async function BlogIndex() {
-  let posts = [];
+  let posts: BlogPost[] = [];
   try {
     const { blobs } = await list({ prefix: 'blog/' });
     posts = blobs
