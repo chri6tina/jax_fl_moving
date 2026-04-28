@@ -4,10 +4,8 @@ import { put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
 import { areas } from '@/app/data/areas';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// We will instantiate the OpenAI client inside the GET handler
+// so it doesn't throw a "Missing credentials" error during the Vercel build phase.
 
 export async function GET(request: Request) {
   // Ensure the request is authorized by Vercel Cron
@@ -22,6 +20,11 @@ export async function GET(request: Request) {
     // Pick a random neighborhood to build hyper-local authority
     const randomNeighborhood = neighborhoods[Math.floor(Math.random() * neighborhoods.length)];
     const currentMonthYear = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+
+    // Initialize OpenAI client here to avoid build-time errors
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const prompt = `You are a professional local SEO copywriter for Jax Moving, a premier local and long-distance moving company based in Jacksonville, FL.
 Write a highly engaging, 1,000-word blog post about moving tips, relocation advice, or moving checklists specifically tailored for homeowners and renters in ${randomNeighborhood}, FL.
