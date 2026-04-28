@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: { default: 'Jax Moving — Jacksonville Movers Done Right', template: '%s | Jax Moving' },
   description: 'Jacksonville\'s most transparent moving company. Flat-rate pricing, 60-second quotes, local crews who treat your belongings like their own.',
   keywords: ['Jacksonville movers', 'moving company Jacksonville FL', 'local movers Jacksonville', 'long distance movers Jacksonville', 'packing services Jacksonville'],
+  verification: {
+    google: 'NlKASfvsC7oPz2eCe0V0vATZgJUOTZuOIa9dzZnT0tU',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
