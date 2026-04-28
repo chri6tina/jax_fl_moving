@@ -92,10 +92,6 @@ export default function Hero() {
 
 
 
-            {/* License line */}
-            <p style={{ marginTop: 20, fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em' }}>
-              FL IM # TBD · USDOT # TBD · Registered with Florida DACS
-            </p>
           </div>
 
           {/* ── Right: Quote form ── */}

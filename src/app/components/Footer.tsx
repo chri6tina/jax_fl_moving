@@ -84,9 +84,6 @@ export default function Footer() {
           <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
             © {YEAR}{" "}Jax Moving. Locally owned &amp; operated in Jacksonville, FL. Serving Duval, Clay &amp; St. Johns counties.
           </p>
-          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)', margin: 0 }}>
-            FL Mover Registration # TBD · USDOT # TBD
-          </p>
         </div>
       </div>
     </footer>
