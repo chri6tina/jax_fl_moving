@@ -4,7 +4,16 @@ import { areas } from '@/app/data/areas';
 import { services } from '@/app/data/services';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://jaxmoving.com'; // Change to actual production URL
+  // Dynamically get the base URL to prevent "URL not allowed" errors in Google Search Console
+  // when submitting the sitemap from a Vercel preview/production domain.
+  const getBaseUrl = () => {
+    if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+    if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    return 'http://localhost:3000';
+  };
+  
+  const baseUrl = getBaseUrl();
 
   // 1. Static Routes
   const staticRoutes = [
