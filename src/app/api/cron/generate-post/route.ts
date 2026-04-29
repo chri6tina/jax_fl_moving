@@ -27,10 +27,15 @@ export async function GET(request: Request) {
     });
 
     const prompt = `You are a professional local SEO copywriter for Jax Moving, a premier local and long-distance moving company based in Jacksonville, FL.
-Write a highly engaging, 1,000-word blog post about moving tips, relocation advice, or moving checklists specifically tailored for homeowners and renters in ${randomNeighborhood}, FL.
-Include specific local context (e.g. housing styles, weather, parking), mention the local real estate vibe in that area, and firmly state that Jax Moving offers transparent flat-rate pricing with zero hidden fees.
+Write a highly comprehensive, 1,500+ word deep-dive blog post about moving tips, relocation advice, or moving checklists specifically tailored for homeowners and renters in ${randomNeighborhood}, FL.
+To achieve the 1,500+ word count, you MUST include:
+1. Deep local context (e.g., specific housing styles, weather considerations, traffic or parking rules in ${randomNeighborhood}).
+2. A detailed, multi-step packing checklist.
+3. Information about the local real estate vibe or community amenities.
+4. An FAQ section at the end.
+Firmly state throughout the article that Jax Moving offers transparent flat-rate pricing with zero hidden fees.
 Format the entire response in clean Markdown.
-Start directly with a # heading for the title, do not wrap the output in markdown code blocks. Make it highly readable with bullet points and H2s.`;
+Start directly with a # heading for the title, do not wrap the output in markdown code blocks. Make it highly readable with bullet points, H2s, and H3s.`;
 
     const completion = await openai.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
