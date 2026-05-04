@@ -23,29 +23,58 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const title = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  let title = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  let description = 'Local moving guide and tips from Jax Moving in Jacksonville, FL.';
+
+  try {
+    const { blobs } = await list({ prefix: `blog/${slug}.md` });
+    if (blobs.length > 0) {
+      const res = await fetch(blobs[0].url);
+      if (res.ok) {
+        const md = await res.text();
+        const titleMatch = md.match(/^#\s+(.+)$/m);
+        if (titleMatch) title = titleMatch[1].trim();
+        const body = md.replace(/^#\s+.+$/m, '');
+        const firstPara = body
+          .split(/\n\n+/)
+          .map(p => p.trim())
+          .find(p => p && !p.startsWith('#') && !p.startsWith('-') && !p.startsWith('*'));
+        if (firstPara) {
+          const plain = firstPara
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+            .replace(/[*_`#>]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim();
+          description = plain.length > 160 ? plain.slice(0, 157).trimEnd() + '...' : plain;
+        }
+      }
+    }
+  } catch { /* fall through to defaults */ }
+
   return {
     title: `${title} | Jax Moving Blog`,
+    description,
+    openGraph: { title, description, type: 'article' },
   };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  
+
   let markdown = '';
   let date = '';
-  
+
   try {
     const { blobs } = await list({ prefix: `blog/${slug}.md` });
     if (blobs.length === 0) {
       notFound();
     }
-    
+
     const response = await fetch(blobs[0].url);
     if (!response.ok) notFound();
-    
+
     markdown = await response.text();
-    
+
     const dateMatch = slug.match(/^(\d{4}-\d{2}-\d{2})/);
     if (dateMatch) {
       date = dateMatch[1];
@@ -62,13 +91,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         subtitle={date ? `Published on ${new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}` : ''}
         centered={false}
       />
-      
+
       <section className="section" style={{ background: '#fff' }}>
         <div className="container" style={{ maxWidth: 800 }}>
           <Link href="/blog" style={{ display: 'inline-block', marginBottom: 32, color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'none' }}>
             &larr; Back to all guides
           </Link>
-          
+
           <div className="markdown-body" style={{ lineHeight: 1.8, fontSize: '1.1rem', color: 'var(--color-text)' }}>
             <ReactMarkdown
               components={{
